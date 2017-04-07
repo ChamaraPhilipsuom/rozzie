@@ -1,0 +1,12 @@
+package com.rozzie.processor
+
+import org.rozzie.processor.models.Flight
+import java.time.Duration;
+
+rule "flightDepartureDelay"
+  when
+  $flight : Flight( isLate(getActualDepatureTime(),getPlannedDepatureTime()) )
+  then
+  System.out.println("Your flight departure time is delayed by " + Duration.between($flight.getActualDepatureTime(),
+  $flight.getPlannedDepatureTime()).toHours() + " hours");
+end
