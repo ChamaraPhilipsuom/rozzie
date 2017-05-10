@@ -7,6 +7,6 @@ rule "flightDepartureDelay"
   when
   $flight : Flight( isLate(getActualDepatureTime(),getPlannedDepatureTime()) )
   then
-  System.out.println("Your flight departure time is delayed by " + Duration.between($flight.getActualDepatureTime(),
-  $flight.getPlannedDepatureTime()).toHours() + " hours");
+  System.out.println("Your flight departure time is delayed by " + Duration.between($flight.getPlannedDepatureTime(),
+  $flight.getActualDepatureTime()).toHours() + " hours");
 end

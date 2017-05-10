@@ -9,9 +9,6 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.UUID;
 
-/**
- * Created by chamarap on 4/6/17.
- */
 public class Flight extends EventSource{
 
 	private UUID flightID;
