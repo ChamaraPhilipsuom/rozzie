@@ -5,7 +5,7 @@ import org.rozzie.processor.events.AirlineEvent;
 /**
  * Created by chamarap on 4/7/17.
  */
-public interface AirlineListener {
+public abstract class AirlineListener {
 
-    public void changeReceived(AirlineEvent event);
+    public abstract void changeReceived(AirlineEvent event);
 }

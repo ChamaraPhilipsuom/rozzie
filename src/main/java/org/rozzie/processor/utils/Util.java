@@ -1,4 +1,4 @@
-package org.rozzie.processor;
+package org.rozzie.processor.utils;
 
 import org.kie.api.io.ResourceType;
 import org.kie.internal.KnowledgeBase;
@@ -8,6 +8,8 @@ import org.kie.internal.builder.DecisionTableInputType;
 import org.kie.internal.builder.KnowledgeBuilder;
 import org.kie.internal.builder.KnowledgeBuilderFactory;
 import org.kie.internal.io.ResourceFactory;
+import org.rozzie.processor.models.dao.FlightDAO;
+import org.rozzie.processor.models.dto.FlightDTO;
 
 /**
  * Created by chamarap on 5/11/17.

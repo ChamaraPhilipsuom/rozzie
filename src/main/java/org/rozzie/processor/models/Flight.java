@@ -6,7 +6,6 @@ import org.rozzie.processor.listeners.FlightDepartureEventListener;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.Period;
 import java.util.UUID;
 
 public class Flight extends EventSource{
@@ -16,14 +15,20 @@ public class Flight extends EventSource{
 	private LocalDateTime plannedArrivalTime;
 	private LocalDateTime actualDepatureTime;
 	private LocalDateTime actualArrivalTime;
-	
+	private Airport source;
+	private Airport destination;
+
+	public Flight(){}
+
 	public Flight(UUID flightID, LocalDateTime plannedArrivalTime, LocalDateTime plannedDepatureTime, LocalDateTime actualArrivalTime,
-				  LocalDateTime actualDepatureTime) {
+				  LocalDateTime actualDepatureTime, Airport source, Airport destination) {
 		this.flightID = flightID;
 		this.plannedArrivalTime = plannedArrivalTime;
 		this.plannedDepatureTime = plannedDepatureTime;
 		this.actualArrivalTime = actualArrivalTime;
 		this.actualDepatureTime = actualDepatureTime;
+		this.source = source;
+		this.destination = destination;
 	}
 
 	public LocalDateTime getPlannedDepatureTime() {
@@ -63,8 +68,28 @@ public class Flight extends EventSource{
 		return this.flightID;
 	}
 
+	public void setFlightID(UUID flightID) {
+		this.flightID = flightID;
+	}
+
 	public boolean isLate(LocalDateTime init, LocalDateTime end){
 		return Duration.between(init,end).isNegative();
+	}
+
+	public Airport getSource() {
+		return source;
+	}
+
+	public void setSource(Airport source) {
+		this.source = source;
+	}
+
+	public Airport getDestination() {
+		return destination;
+	}
+
+	public void setDestination(Airport destination) {
+		this.destination = destination;
 	}
 
 	private synchronized void fireDepatureTimeChangeEvent() {

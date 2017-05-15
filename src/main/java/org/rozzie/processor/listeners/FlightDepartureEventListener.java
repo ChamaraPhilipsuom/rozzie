@@ -1,11 +1,8 @@
 package org.rozzie.processor.listeners;
 
-import org.kie.api.KieServices;
-import org.kie.api.runtime.KieContainer;
-import org.kie.api.runtime.KieSession;
 import org.kie.internal.KnowledgeBase;
 import org.kie.internal.runtime.StatelessKnowledgeSession;
-import org.rozzie.processor.Util;
+import org.rozzie.processor.utils.Util;
 import org.rozzie.processor.events.AirlineEvent;
 import org.rozzie.processor.events.FlightDepatureTimeChangeEvent;
 import org.rozzie.processor.models.Flight;
@@ -13,7 +10,7 @@ import org.rozzie.processor.models.Flight;
 /**
  * Created by chamarap on 4/6/17.
  */
-public class FlightDepartureEventListener implements AirlineListener {
+public class FlightDepartureEventListener extends AirlineListener {
 
     public void changeReceived(AirlineEvent event){
         FlightDepatureTimeChangeEvent fEvent = (FlightDepatureTimeChangeEvent)event;
