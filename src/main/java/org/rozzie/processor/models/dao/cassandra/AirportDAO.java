@@ -1,4 +1,4 @@
-package org.rozzie.processor.models.dao;
+package org.rozzie.processor.models.dao.cassandra;
 
 
 import com.datastax.driver.core.utils.UUIDs;

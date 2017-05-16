@@ -1,4 +1,4 @@
-package org.rozzie.processor.models.dao;
+package org.rozzie.processor.models.dao.cassandra;
 
 import org.rozzie.processor.models.Flight;
 import org.springframework.data.cassandra.mapping.PrimaryKey;

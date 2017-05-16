@@ -1,10 +1,11 @@
 package org.rozzie.processor.services;
 
 import org.apache.commons.lang3.StringUtils;
+import org.rozzie.processor.listeners.FlightDepartureEventListener;
 import org.rozzie.processor.models.Airport;
 import org.rozzie.processor.models.Flight;
-import org.rozzie.processor.models.dao.AirportDAO;
-import org.rozzie.processor.models.dao.FlightDAO;
+import org.rozzie.processor.models.dao.cassandra.AirportDAO;
+import org.rozzie.processor.models.dao.cassandra.FlightDAO;
 import org.rozzie.processor.models.dto.AirportDTO;
 import org.rozzie.processor.models.dto.FlightDTO;
 import org.rozzie.processor.repositories.cassandra.AirportRepository;
@@ -12,6 +13,7 @@ import org.rozzie.processor.repositories.cassandra.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 
@@ -28,6 +30,14 @@ public class CassandraService {
           return getFlightDTO(getFlightFromDAO(flightRepository.findByFlightId(UUID.fromString(uuid))));
     }
 
+    public FlightDTO changeDepatureTime(String flightId, LocalDateTime newDepatureTime){
+          UUID uuid = UUID.fromString(flightId);
+          Flight flight = getFlightFromDAO(flightRepository.findByFlightId(uuid));
+          flight.addListener(new FlightDepartureEventListener());
+		  flight.setActualDepatureTime(newDepatureTime);
+		  FlightDAO flightDAO = flightRepository.save(new FlightDAO(flight));
+		  return getFlightDTO(getFlightFromDAO(flightDAO));
+	}
     public AirportDTO getAirPort(String uuid){
     	return  getPortDTO(getPortFromDAO(airportRepository.findByAirportId(UUID.fromString(uuid))));
 	}
@@ -70,8 +80,8 @@ public class CassandraService {
 		    flightDTO.setFlightID(flight.getFlightID());
 		    flightDTO.setActualDepatureTime(flight.getActualDepatureTime());
 		    flightDTO.setActualArrivalTime(flight.getActualArrivalTime());
-		    flight.setPlannedDepatureTime(flight.getPlannedDepatureTime());
-		    flight.setActualDepatureTime(flight.getActualDepatureTime());
+		    flightDTO.setPlannedDepatureTime(flight.getPlannedDepatureTime());
+		    flightDTO.setPlannedArrivalTime(flight.getPlannedArrivalTime());
 		    flightDTO.setSource(getPortDTO(flight.getSource()));
 		    flightDTO.setDestination(getPortDTO(flight.getDestination()));
         }

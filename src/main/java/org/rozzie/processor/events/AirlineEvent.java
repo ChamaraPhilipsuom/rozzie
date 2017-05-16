@@ -8,6 +8,7 @@ import java.util.EventObject;
 public abstract  class AirlineEvent extends EventObject{
 
 
+    private String eventName;
     /**
      * Constructs a prototypical Event.
      *
@@ -16,5 +17,13 @@ public abstract  class AirlineEvent extends EventObject{
      */
     public AirlineEvent(Object source) {
         super(source);
+    }
+
+    public String getEventName() {
+        return eventName;
+    }
+
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
     }
 }

@@ -1,5 +1,7 @@
 package org.rozzie.processor.models;
 
+import org.neo4j.ogm.annotation.NodeEntity;
+import org.rozzie.processor.events.AirlineEvent;
 import org.rozzie.processor.events.FlightDepatureTimeChangeEvent;
 import org.rozzie.processor.listeners.AirlineListener;
 import org.rozzie.processor.listeners.FlightDepartureEventListener;
@@ -9,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Flight extends EventSource{
+
 
 	private UUID flightID;
 	private LocalDateTime plannedDepatureTime;
@@ -93,9 +96,9 @@ public class Flight extends EventSource{
 	}
 
 	private synchronized void fireDepatureTimeChangeEvent() {
-		FlightDepatureTimeChangeEvent event = new FlightDepatureTimeChangeEvent(this);
+		AirlineEvent event = new FlightDepatureTimeChangeEvent(this);
 		for (AirlineListener listener : getListeners()) {
-			((FlightDepartureEventListener) listener).changeReceived(event);
+			listener.changeReceived(event);
 		}
 	}
 }

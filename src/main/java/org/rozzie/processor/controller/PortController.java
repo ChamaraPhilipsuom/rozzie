@@ -17,8 +17,8 @@ public class PortController {
     @Autowired
     private CassandraService cassandraService;
 
-    @RequestMapping(value = Constants.RequestUri.GET_PORT, method = RequestMethod.GET, produces = "application/json")
-    public AirportDTO getFlight(@RequestParam String portId) {
-        return this.cassandraService.getAirPort(portId);
-    }
+	@RequestMapping(value = Constants.RequestUri.Port.GET_PORT, method = RequestMethod.GET, produces = "application/json")
+	public AirportDTO getFlight(@RequestParam String portId) {
+		return this.cassandraService.getAirPort(portId);
+	}
 }

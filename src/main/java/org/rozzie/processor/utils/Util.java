@@ -8,21 +8,19 @@ import org.kie.internal.builder.DecisionTableInputType;
 import org.kie.internal.builder.KnowledgeBuilder;
 import org.kie.internal.builder.KnowledgeBuilderFactory;
 import org.kie.internal.io.ResourceFactory;
-import org.rozzie.processor.models.dao.FlightDAO;
-import org.rozzie.processor.models.dto.FlightDTO;
 
 /**
  * Created by chamarap on 5/11/17.
  */
 public class Util {
 
-    public static KnowledgeBase createKnowledgeBaseFromSpreadsheet() throws Exception {
+    public static KnowledgeBase createKnowledgeBaseFromSpreadsheet(String eventName) throws Exception {
         DecisionTableConfiguration dtconf = KnowledgeBuilderFactory.newDecisionTableConfiguration();
         dtconf.setInputType(DecisionTableInputType.XLS);
 
         KnowledgeBuilder knowledgeBuilder = KnowledgeBuilderFactory
                 .newKnowledgeBuilder();
-        knowledgeBuilder.add(ResourceFactory.newClassPathResource("flight.xls"),
+        knowledgeBuilder.add(ResourceFactory.newClassPathResource(eventName+".xls"),
                 ResourceType.DTABLE, dtconf);
 
         if (knowledgeBuilder.hasErrors()) {

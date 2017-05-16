@@ -1,6 +1,6 @@
 package org.rozzie.processor.repositories.cassandra;
 
-import org.rozzie.processor.models.dao.AirportDAO;
+import org.rozzie.processor.models.dao.cassandra.AirportDAO;
 import org.springframework.data.cassandra.repository.CassandraRepository;
 import org.springframework.data.cassandra.repository.Query;
 
