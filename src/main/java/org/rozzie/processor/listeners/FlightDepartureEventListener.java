@@ -9,16 +9,16 @@ import org.rozzie.processor.models.Flight;
 
 public class FlightDepartureEventListener extends AirlineListener {
 
-    public void changeReceived(AirlineEvent event){
-        if(event instanceof FlightDepatureTimeChangeEvent) {
-            Flight flight = (Flight) event.getSource();
-            try {
-                KnowledgeBase knowledgeBase = Util.createKnowledgeBaseFromSpreadsheet(event.getEventName());
-                StatelessKnowledgeSession session = knowledgeBase.newStatelessKnowledgeSession();
-                session.execute(flight);
-            } catch (Exception e) {
-                System.out.println("Exception occured " + e);
-            }
-        }
-    }
+	public void changeReceived(AirlineEvent event) {
+		if (event instanceof FlightDepatureTimeChangeEvent) {
+			Flight flight = (Flight) event.getSource();
+			try {
+				KnowledgeBase knowledgeBase = Util.createKnowledgeBaseFromSpreadsheet(event.getEventName());
+				StatelessKnowledgeSession session = knowledgeBase.newStatelessKnowledgeSession();
+				session.execute(flight);
+			} catch (Exception e) {
+				System.out.println("Exception occured " + e);
+			}
+		}
+	}
 }

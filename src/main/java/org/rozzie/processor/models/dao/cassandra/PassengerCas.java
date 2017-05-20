@@ -1,16 +1,28 @@
-package org.rozzie.processor.models;
+package org.rozzie.processor.models.dao.cassandra;
 
-import java.util.List;
+import org.rozzie.processor.models.dto.BaseDTO;
+import org.springframework.data.cassandra.mapping.PrimaryKey;
+import org.springframework.data.cassandra.mapping.Table;
+
 import java.util.UUID;
 
-public class Passenger extends EventSource {
+@Table
+public class PassengerCas implements BaseCas {
 
+	@PrimaryKey
 	private UUID passengerId;
 	private String name;
 	private String country;
 	private String contact;
-	private Flight flight;
-	private List<Baggage> baggages;
+
+	public PassengerCas() {
+	}
+
+	public PassengerCas(UUID passengerId, String name, String country, String contact) {
+		this.name = name;
+		this.country = country;
+		this.contact = contact;
+	}
 
 	public UUID getPassengerId() {
 		return passengerId;
@@ -44,19 +56,8 @@ public class Passenger extends EventSource {
 		this.contact = contact;
 	}
 
-	public List<Baggage> getBaggages() {
-		return baggages;
-	}
-
-	public void setBaggages(List<Baggage> baggages) {
-		this.baggages = baggages;
-	}
-
-	public Flight getFlight() {
-		return flight;
-	}
-
-	public void setFlight(Flight flight) {
-		this.flight = flight;
+	@Override
+	public BaseDTO getDTO(BaseDTO dto) {
+		return null;
 	}
 }

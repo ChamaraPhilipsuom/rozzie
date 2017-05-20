@@ -5,9 +5,6 @@ import org.rozzie.processor.listeners.AirlineListener;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by chamarap on 4/6/17.
- */
 public abstract class EventSource {
 
 	private List<AirlineListener> _listeners = new ArrayList();

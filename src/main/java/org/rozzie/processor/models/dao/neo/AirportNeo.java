@@ -2,20 +2,22 @@ package org.rozzie.processor.models.dao.neo;
 
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.rozzie.processor.models.dto.AirportDTO;
+import org.rozzie.processor.models.dto.BaseDTO;
 
 import java.util.UUID;
 
 @NodeEntity
-public class AirportDAO {
+public class AirportNeo implements BaseNeo {
 
 	@GraphId
 	private Long nodeId;
 	private String airportId;
 
-	public AirportDAO() {
+	public AirportNeo() {
 	}
 
-	public AirportDAO(UUID airportId) {
+	public AirportNeo(UUID airportId) {
 		this.airportId = airportId.toString();
 	}
 
@@ -33,5 +35,11 @@ public class AirportDAO {
 
 	public void setAirportId(UUID airportId) {
 		this.airportId = airportId.toString();
+	}
+
+	@Override
+	public BaseDTO getDTO(BaseDTO dto) {
+		AirportDTO airportDTO = (AirportDTO) dto;
+		return airportDTO;
 	}
 }

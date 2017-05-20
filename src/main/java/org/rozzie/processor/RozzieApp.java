@@ -7,8 +7,8 @@ import org.rozzie.processor.models.Flight;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import org.rozzie.processor.models.dao.cassandra.AirportDAO;
-import org.rozzie.processor.models.dao.cassandra.FlightDAO;
+import org.rozzie.processor.models.dao.cassandra.AirportCas;
+import org.rozzie.processor.models.dao.cassandra.FlightCas;
 import org.rozzie.processor.repositories.cassandra.AirportRepository;
 import org.rozzie.processor.repositories.cassandra.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RozzieApp implements CommandLineRunner{
+public class RozzieApp implements CommandLineRunner {
 
 	@Autowired
 	private FlightRepository flightRepository;
@@ -33,16 +33,16 @@ public class RozzieApp implements CommandLineRunner{
 
 			LocalDateTime plannedArrival = LocalDateTime.now().plusHours(1);
 			LocalDateTime plannedDeparture = LocalDateTime.now().plusHours(3);
-			System.out.println( "The time is " + plannedArrival);
+			System.out.println("The time is " + plannedArrival);
 
 			Airport source = new Airport(UUID.randomUUID(), "Colombo", "Sri Lanka");
 			Airport destination = new Airport(UUID.randomUUID(), "Bangalore", "India");
 
 			Flight flight = new Flight(UUID.randomUUID(), plannedArrival, plannedDeparture, plannedArrival,
 					plannedDeparture, source, destination);
-			flightRepository.save(new FlightDAO(flight));
-			airportRepository.save(new AirportDAO(source));
-			airportRepository.save(new AirportDAO(destination));
+			flightRepository.save(new FlightCas(flight));
+			airportRepository.save(new AirportCas(source));
+			airportRepository.save(new AirportCas(destination));
 
 			FlightDepartureEventListener listener = new FlightDepartureEventListener();
 			flight.addListener(listener);

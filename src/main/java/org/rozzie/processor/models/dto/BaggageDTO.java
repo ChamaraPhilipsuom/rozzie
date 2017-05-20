@@ -1,17 +1,20 @@
-package org.rozzie.processor.models;
+package org.rozzie.processor.models.dto;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.util.UUID;
 
-public class Baggage extends EventSource {
-
+@XmlRootElement
+@XmlType
+public class BaggageDTO implements BaseDTO {
 	private UUID baggageId;
 	private String baggageType;
 	private float weight;
 
-	public Baggage() {
+	public BaggageDTO() {
 	}
 
-	public Baggage(UUID baggageId, String baggageType, float weight) {
+	public BaggageDTO(UUID baggageId, String baggageType, float weight) {
 		this.baggageId = baggageId;
 		this.baggageType = baggageType;
 		this.weight = weight;
@@ -39,5 +42,10 @@ public class Baggage extends EventSource {
 
 	public void setWeight(float weight) {
 		this.weight = weight;
+	}
+
+	@Override
+	public BaseDTO completeObject(Object... objects) {
+		return null;
 	}
 }

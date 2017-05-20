@@ -10,8 +10,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Flight extends EventSource{
-
+public class Flight extends EventSource {
 
 	private UUID flightID;
 	private LocalDateTime plannedDepatureTime;
@@ -20,11 +19,13 @@ public class Flight extends EventSource{
 	private LocalDateTime actualArrivalTime;
 	private Airport source;
 	private Airport destination;
+	private Plane plane;
 
-	public Flight(){}
+	public Flight() {
+	}
 
-	public Flight(UUID flightID, LocalDateTime plannedArrivalTime, LocalDateTime plannedDepatureTime, LocalDateTime actualArrivalTime,
-				  LocalDateTime actualDepatureTime, Airport source, Airport destination) {
+	public Flight(UUID flightID, LocalDateTime plannedArrivalTime, LocalDateTime plannedDepatureTime,
+			LocalDateTime actualArrivalTime, LocalDateTime actualDepatureTime, Airport source, Airport destination) {
 		this.flightID = flightID;
 		this.plannedArrivalTime = plannedArrivalTime;
 		this.plannedDepatureTime = plannedDepatureTime;
@@ -67,7 +68,7 @@ public class Flight extends EventSource{
 		this.actualArrivalTime = actualArrivalTime;
 	}
 
-	public UUID getFlightID(){
+	public UUID getFlightID() {
 		return this.flightID;
 	}
 
@@ -75,8 +76,8 @@ public class Flight extends EventSource{
 		this.flightID = flightID;
 	}
 
-	public boolean isLate(LocalDateTime init, LocalDateTime end){
-		return Duration.between(init,end).isNegative();
+	public boolean isLate(LocalDateTime init, LocalDateTime end) {
+		return Duration.between(init, end).isNegative();
 	}
 
 	public Airport getSource() {
@@ -93,6 +94,14 @@ public class Flight extends EventSource{
 
 	public void setDestination(Airport destination) {
 		this.destination = destination;
+	}
+
+	public Plane getPlane() {
+		return plane;
+	}
+
+	public void setPlane(Plane plane) {
+		this.plane = plane;
 	}
 
 	private synchronized void fireDepatureTimeChangeEvent() {

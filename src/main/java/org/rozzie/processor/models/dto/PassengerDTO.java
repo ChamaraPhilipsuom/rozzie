@@ -1,16 +1,24 @@
-package org.rozzie.processor.models;
+package org.rozzie.processor.models.dto;
 
+import org.rozzie.processor.models.Baggage;
+
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.util.List;
 import java.util.UUID;
 
-public class Passenger extends EventSource {
-
+@XmlRootElement
+@XmlType
+public class PassengerDTO implements BaseDTO {
 	private UUID passengerId;
 	private String name;
 	private String country;
 	private String contact;
-	private Flight flight;
-	private List<Baggage> baggages;
+	private FlightDTO flightDTO;
+	private List<BaggageDTO> baggages;
+
+	public PassengerDTO() {
+	}
 
 	public UUID getPassengerId() {
 		return passengerId;
@@ -44,19 +52,24 @@ public class Passenger extends EventSource {
 		this.contact = contact;
 	}
 
-	public List<Baggage> getBaggages() {
+	public List<BaggageDTO> getBaggages() {
 		return baggages;
 	}
 
-	public void setBaggages(List<Baggage> baggages) {
+	public void setBaggages(List<BaggageDTO> baggages) {
 		this.baggages = baggages;
 	}
 
-	public Flight getFlight() {
-		return flight;
+	public FlightDTO getFlightDTO() {
+		return flightDTO;
 	}
 
-	public void setFlight(Flight flight) {
-		this.flight = flight;
+	public void setFlightDTO(FlightDTO flightDTO) {
+		this.flightDTO = flightDTO;
+	}
+
+	@Override
+	public BaseDTO completeObject(Object... objects) {
+		return null;
 	}
 }
