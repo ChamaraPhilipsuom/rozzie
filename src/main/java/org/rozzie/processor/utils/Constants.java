@@ -10,6 +10,7 @@ public class Constants {
 	     public static class Flight {
              public static final String GET_FLIGHT = "/info";
              public static final String CHANGE_DEPATURE = "/changeDepature";
+             public static final String CREATE_FLIGHT = "/create";
          }
          public static class Port {
              public static final String GET_PORT = "/info";

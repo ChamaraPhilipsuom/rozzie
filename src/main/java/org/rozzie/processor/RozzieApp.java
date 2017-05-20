@@ -33,6 +33,7 @@ public class RozzieApp implements CommandLineRunner{
 
 			LocalDateTime plannedArrival = LocalDateTime.now().plusHours(1);
 			LocalDateTime plannedDeparture = LocalDateTime.now().plusHours(3);
+			System.out.println( "The time is " + plannedArrival);
 
 			Airport source = new Airport(UUID.randomUUID(), "Colombo", "Sri Lanka");
 			Airport destination = new Airport(UUID.randomUUID(), "Bangalore", "India");

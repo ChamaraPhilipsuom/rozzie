@@ -11,6 +11,7 @@ import org.rozzie.processor.models.dto.FlightDTO;
 import org.rozzie.processor.repositories.cassandra.AirportRepository;
 import org.rozzie.processor.repositories.cassandra.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ import java.util.UUID;
 
 
 @Service
+@EnableCassandraRepositories(basePackages = "org.rozzie.processor.repositories.cassandra")
 public class CassandraService {
 
     @Autowired

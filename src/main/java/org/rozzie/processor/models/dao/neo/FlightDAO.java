@@ -3,6 +3,7 @@ package org.rozzie.processor.models.dao.neo;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
+import org.rozzie.processor.models.Flight;
 
 import java.util.UUID;
 
@@ -11,41 +12,44 @@ public class FlightDAO {
 
     @GraphId
     private Long nodeId;
-    private UUID flightId;
+    private String flightId;
 
     @Relationship(type="SOURCE_PORT", direction = Relationship.OUTGOING)
-    private FlightDAO sourcePort;
+    private AirportDAO sourcePort;
 
     @Relationship(type="DEST_PORT", direction = Relationship.OUTGOING)
-    private FlightDAO destinationPort;
+    private AirportDAO destinationPort;
 
     public FlightDAO(){}
+    public FlightDAO(UUID flightId){
+        this.flightId = flightId.toString();
+    }
 
     public Long getNodeId() {
         return nodeId;
     }
 
     public UUID getFlightId() {
-        return flightId;
+        return UUID.fromString(flightId);
     }
 
     public void setFlightId(UUID flightId) {
-        this.flightId = flightId;
+        this.flightId = flightId.toString();
     }
 
-    public FlightDAO getSourcePort() {
+    public AirportDAO getSourcePort() {
         return sourcePort;
     }
 
-    public void setSourcePort(FlightDAO sourcePort) {
+    public void setSourcePort(AirportDAO sourcePort) {
         this.sourcePort = sourcePort;
     }
 
-    public FlightDAO getDestinationPort() {
+    public AirportDAO getDestinationPort() {
         return destinationPort;
     }
 
-    public void setDestinationPort(FlightDAO destinationPort) {
+    public void setDestinationPort(AirportDAO destinationPort) {
         this.destinationPort = destinationPort;
     }
 }

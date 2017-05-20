@@ -10,9 +10,13 @@ public class AirportDAO {
 
 	@GraphId
 	private Long nodeId;
-	private UUID airportId;
+	private String airportId;
 
 	public AirportDAO() {
+	}
+
+	public AirportDAO(UUID airportId) {
+		this.airportId = airportId.toString();
 	}
 
 	public Long getNodeId() {
@@ -24,10 +28,10 @@ public class AirportDAO {
 	}
 
 	public UUID getAirportId() {
-		return airportId;
+		return UUID.fromString(airportId);
 	}
 
 	public void setAirportId(UUID airportId) {
-		this.airportId = airportId;
+		this.airportId = airportId.toString();
 	}
 }

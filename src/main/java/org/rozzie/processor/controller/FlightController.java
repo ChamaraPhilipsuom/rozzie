@@ -2,6 +2,7 @@ package org.rozzie.processor.controller;
 
 import org.rozzie.processor.models.dto.FlightDTO;
 import org.rozzie.processor.services.CassandraService;
+import org.rozzie.processor.services.NeoService;
 import org.rozzie.processor.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("flight")
@@ -18,6 +20,20 @@ public class FlightController {
 
     @Autowired
     private CassandraService cassandraService;
+
+    @Autowired
+    private NeoService neoService;
+
+    @RequestMapping(value = Constants.RequestUri.Flight.CREATE_FLIGHT, method = RequestMethod.POST, produces = "application/json")
+    public FlightDTO createFlight(@RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime
+                                          plannedArrivalTime, @RequestParam  @DateTimeFormat(iso = DateTimeFormat
+            .ISO.DATE_TIME) LocalDateTime plannedDepatureTime,@RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO
+            .DATE_TIME) LocalDateTime actualArrivalTime,@RequestParam  @DateTimeFormat(iso = DateTimeFormat.ISO
+            .DATE_TIME) LocalDateTime actualDepatureTime, @RequestParam String sourceId, @RequestParam String
+                                          destinationId){
+        return this.neoService.createFlight(plannedArrivalTime,plannedDepatureTime,actualArrivalTime,actualDepatureTime,
+                UUID.fromString(sourceId),UUID.fromString(destinationId));
+    }
 
 	@RequestMapping(value = Constants.RequestUri.Flight.GET_FLIGHT, method = RequestMethod.GET, produces = "application/json")
 	public FlightDTO getFlight(@RequestParam String flightId) {
