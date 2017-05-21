@@ -2,6 +2,7 @@ package org.rozzie.processor.services;
 
 import org.rozzie.processor.listeners.FlightArrivalEventListener;
 import org.rozzie.processor.listeners.FlightDepartureEventListener;
+import org.rozzie.processor.listeners.FlightEventListener;
 import org.rozzie.processor.models.event.sources.Airport;
 import org.rozzie.processor.models.event.sources.Flight;
 import org.rozzie.processor.models.dao.cassandra.AirportCas;
@@ -14,6 +15,7 @@ import org.rozzie.processor.models.dto.BaggageDTO;
 import org.rozzie.processor.models.dto.FlightDTO;
 import org.rozzie.processor.models.dto.PassengerDTO;
 import org.rozzie.processor.models.dto.PlaneDTO;
+import org.rozzie.processor.models.event.sources.Passenger;
 import org.rozzie.processor.repositories.cassandra.AirportRepo;
 import org.rozzie.processor.repositories.cassandra.BaggageRepo;
 import org.rozzie.processor.repositories.cassandra.FlightRepo;
@@ -68,9 +70,10 @@ public class CassandraService {
 	}
 
 	public PassengerDTO createPassenger(String name, String country, String contact) {
-		PassengerCas passenger = new PassengerCas(UUID.randomUUID(), name, country, contact);
-		passenger = passengerRepo.save(passenger);
-		return (PassengerDTO) passenger.getDTO(new PassengerDTO());
+		PassengerCas passengerCas = new PassengerCas(UUID.randomUUID(), name, country, contact);
+		passengerCas = passengerRepo.save(passengerCas);
+		Passenger passenger = new Passenger(passengerCas.getPassengerId(),passengerCas.getName());
+		return (PassengerDTO) passengerCas.getDTO(new PassengerDTO());
 	}
 
 	public PlaneDTO createPlane(String airline, String planeNumber) {

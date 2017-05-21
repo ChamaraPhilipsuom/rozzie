@@ -2,6 +2,7 @@ package org.rozzie.processor.models.event.sources;
 
 import org.rozzie.processor.events.AirlineEvent;
 import org.rozzie.processor.events.FlightArrivalTimeChangeEvent;
+import org.rozzie.processor.events.FlightBookingEvent;
 import org.rozzie.processor.events.FlightDepatureTimeChangeEvent;
 import org.rozzie.processor.listeners.AirlineListener;
 
@@ -21,6 +22,10 @@ public class Flight extends EventSource {
 	private Plane plane;
 
 	public Flight() {
+	}
+
+	public Flight(UUID flightID) {
+		this.flightID = flightID;
 	}
 
 	public Flight(UUID flightID, LocalDateTime plannedArrivalTime, LocalDateTime plannedDepatureTime,
@@ -104,9 +109,8 @@ public class Flight extends EventSource {
 		this.plane = plane;
 	}
 
-	private synchronized void fireChangeEvent(AirlineEvent event) {
-		for (AirlineListener listener : getListeners()) {
-			listener.changeReceived(event);
-		}
+	public void addPassenger(Passenger passenger){
+       fireChangeEvent(new FlightBookingEvent(this));
 	}
+
 }

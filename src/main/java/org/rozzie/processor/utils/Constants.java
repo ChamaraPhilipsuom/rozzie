@@ -5,6 +5,8 @@ package org.rozzie.processor.utils;
  */
 public class Constants {
 
+	public static final String EVENT_MESSAGE = "=============================================\n"+
+			"        ROZZIE EVENT TRIGGERED\n" + "=============================================\n";
 	public static class RequestUri {
 
 		public static final String GET = "/info";
@@ -33,5 +35,6 @@ public class Constants {
 	public static class EventName {
 		public static final String FLIGHT_DEPATURE_TIMECHANGE = "depatureTimeChange";
 		public static final String FLIGHT_ARRIVAL_TIMECHANGE = "arrivalTimeChange";
+		public static final String FLIGHT_BOOKING = "bookingEvent";
 	}
 }

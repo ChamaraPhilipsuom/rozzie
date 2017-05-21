@@ -1,5 +1,6 @@
 package org.rozzie.processor.models.event.sources;
 
+import org.rozzie.processor.events.AirlineEvent;
 import org.rozzie.processor.listeners.AirlineListener;
 
 import java.util.ArrayList;
@@ -19,5 +20,11 @@ public abstract class EventSource {
 
 	public List<AirlineListener> getListeners() {
 		return _listeners;
+	}
+
+	protected synchronized void fireChangeEvent(AirlineEvent event) {
+		for (AirlineListener listener : _listeners) {
+			listener.changeReceived(event);
+		}
 	}
 }

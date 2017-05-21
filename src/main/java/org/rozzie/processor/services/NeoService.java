@@ -1,5 +1,6 @@
 package org.rozzie.processor.services;
 
+import org.rozzie.processor.listeners.FlightEventListener;
 import org.rozzie.processor.models.dao.neo.AirportNeo;
 import org.rozzie.processor.models.dao.neo.BaggageNeo;
 import org.rozzie.processor.models.dao.neo.FlightNeo;
@@ -10,6 +11,8 @@ import org.rozzie.processor.models.dto.BaggageDTO;
 import org.rozzie.processor.models.dto.FlightDTO;
 import org.rozzie.processor.models.dto.PassengerDTO;
 import org.rozzie.processor.models.dto.PlaneDTO;
+import org.rozzie.processor.models.event.sources.Flight;
+import org.rozzie.processor.models.event.sources.Passenger;
 import org.rozzie.processor.repositories.neo.PlaneRepo;
 import org.rozzie.processor.repositories.neo.PassengerRepo;
 import org.rozzie.processor.repositories.neo.AirportRepo;
@@ -85,8 +88,13 @@ public class NeoService {
 		if (Util.isNull(passengerNeo)) {
 			passengerNeo = new PassengerNeo(passengerDTO.getPassengerId().toString());
 		}
-		FlightNeo flight = flightRepo.findByFlightId(passengerDTO.getFlightDTO().getFlightID().toString());
-		passengerNeo.setFlight(flight);
+		FlightNeo flightNeo = flightRepo.findByFlightId(passengerDTO.getFlightDTO().getFlightID().toString());
+
+		Flight flight = new Flight(UUID.fromString(flightNeo.getFlightId()));
+		flight.addListener(new FlightEventListener());
+		flight.addPassenger(new Passenger());
+
+		passengerNeo.setFlight(flightNeo);
 		passengerNeo = passengerRepo.save(passengerNeo);
 		return (PassengerDTO) passengerNeo.getDTO(passengerDTO);
 	}
