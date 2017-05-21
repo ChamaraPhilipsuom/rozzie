@@ -72,7 +72,7 @@ public class CassandraService {
 	public PassengerDTO createPassenger(String name, String country, String contact) {
 		PassengerCas passengerCas = new PassengerCas(UUID.randomUUID(), name, country, contact);
 		passengerCas = passengerRepo.save(passengerCas);
-		Passenger passenger = new Passenger(passengerCas.getPassengerId(),passengerCas.getName());
+		Passenger passenger = new Passenger(passengerCas.getPassengerId(),passengerCas.getName(), true);
 		return (PassengerDTO) passengerCas.getDTO(new PassengerDTO());
 	}
 

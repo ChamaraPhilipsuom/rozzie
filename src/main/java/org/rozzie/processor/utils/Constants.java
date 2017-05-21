@@ -25,6 +25,7 @@ public class Constants {
 		}
 		public static class Passenger {
 			public static final String CONTROLLER = "/passenger";
+			public static final String CHECK_IN = "/checkin";
 		}
 		public static class Plane {
 			public static final String CONTROLLER = "/plane";

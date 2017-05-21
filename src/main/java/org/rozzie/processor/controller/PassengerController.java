@@ -1,8 +1,12 @@
 package org.rozzie.processor.controller;
 
+import org.rozzie.processor.listeners.FlightEventListener;
+import org.rozzie.processor.listeners.PassengerEventListener;
 import org.rozzie.processor.models.dto.BaggageDTO;
 import org.rozzie.processor.models.dto.FlightDTO;
 import org.rozzie.processor.models.dto.PassengerDTO;
+import org.rozzie.processor.models.event.sources.Flight;
+import org.rozzie.processor.models.event.sources.Passenger;
 import org.rozzie.processor.services.CassandraService;
 import org.rozzie.processor.services.NeoService;
 import org.rozzie.processor.utils.Constants;
@@ -45,6 +49,20 @@ public class PassengerController {
 			}
 		}
 		return passenger;
+	}
+
+	@RequestMapping(value = Constants.RequestUri.Passenger.CHECK_IN, method = RequestMethod.POST, produces =
+			"application/json")
+	public PassengerDTO checkin(@RequestParam String passengerId, @RequestParam String flightId){
+		PassengerDTO passengerDTO = this.cassandraService.getPassenger(passengerId);
+		FlightDTO flightDTO = this.cassandraService.getFlight(flightId);
+		//isCheckedIn should be added to the cassandra database
+		Passenger passenger = new Passenger(passengerDTO.getPassengerId(),passengerDTO.getName(),false);
+		passenger.checkin();
+		Flight flight = new Flight(flightDTO.getFlightID());
+		flight.addListener(new FlightEventListener());
+		flight.passengerCheckIn(passenger);
+		return passengerDTO;
 	}
 
 }

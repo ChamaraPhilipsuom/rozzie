@@ -1,6 +1,7 @@
 package org.rozzie.processor.models.event.sources;
 
 import org.rozzie.processor.events.AirlineEvent;
+import org.rozzie.processor.events.CheckInEvent;
 import org.rozzie.processor.events.FlightArrivalTimeChangeEvent;
 import org.rozzie.processor.events.FlightBookingEvent;
 import org.rozzie.processor.events.FlightDepatureTimeChangeEvent;
@@ -111,6 +112,10 @@ public class Flight extends EventSource {
 
 	public void addPassenger(Passenger passenger){
        fireChangeEvent(new FlightBookingEvent(this));
+	}
+
+	public void passengerCheckIn(Passenger passenger){
+		fireChangeEvent(new CheckInEvent(this));
 	}
 
 }

@@ -1,7 +1,9 @@
 package org.rozzie.processor.models.event.sources;
 
+import org.rozzie.processor.events.CheckInEvent;
 import org.rozzie.processor.events.FlightBookingEvent;
 import org.rozzie.processor.listeners.FlightEventListener;
+import org.rozzie.processor.listeners.PassengerEventListener;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,11 +19,13 @@ public class Passenger extends EventSource {
 
 	public Passenger(){}
 
-	public Passenger(UUID passengerId, String name){
+	public Passenger(UUID passengerId, String name, boolean triggerBookingEvent){
 		this.passengerId = passengerId;
 		this.name = name;
-		this.addListener(new FlightEventListener());
-		fireChangeEvent(new FlightBookingEvent(this));
+		if(triggerBookingEvent) {
+			this.addListener(new FlightEventListener());
+			fireChangeEvent(new FlightBookingEvent(this));
+		}
 	}
 
 	public UUID getPassengerId() {
@@ -70,5 +74,10 @@ public class Passenger extends EventSource {
 
 	public void setFlight(Flight flight) {
 		this.flight = flight;
+	}
+
+	public void checkin(){
+		this.addListener(new PassengerEventListener());
+		fireChangeEvent(new CheckInEvent(this));
 	}
 }
