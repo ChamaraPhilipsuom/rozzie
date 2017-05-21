@@ -9,6 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @XmlRootElement
@@ -21,8 +22,13 @@ public class FlightDTO implements BaseDTO {
 	private LocalDateTime actualArrivalTime;
 	private AirportDTO source;
 	private AirportDTO destination;
+	private List<PassengerDTO> passengers;
 
 	public FlightDTO() {
+	}
+
+	public FlightDTO(UUID flightID) {
+		this.flightID = flightID;
 	}
 
 	public FlightDTO(UUID flightID, LocalDateTime plannedArrivalTime, LocalDateTime plannedDepatureTime,
@@ -93,21 +99,12 @@ public class FlightDTO implements BaseDTO {
 		this.destination = destination;
 	}
 
-	public BaseDTO readCassandra(BaseCas cassandraObj) {
-		FlightCas flightCas = (FlightCas) cassandraObj;
-		this.flightID = flightCas.getFlightID();
-		this.plannedArrivalTime = flightCas.getPlannedArrivalTime();
-		this.plannedDepatureTime = flightCas.getPlannedDepatureTime();
-		this.actualArrivalTime = flightCas.getActualArrivalTime();
-		this.actualDepatureTime = flightCas.getActualDepatureTime();
-		return this;
+	public List<PassengerDTO> getPassengers() {
+		return passengers;
 	}
 
-	public BaseDTO readNeo(BaseNeo neoObj) {
-		FlightNeo flightNeo = (FlightNeo) neoObj;
-		// this.source = flightNeo.getSourcePort();
-		this.destination = destination;
-		return this;
+	public void setPassengers(List<PassengerDTO> passengers) {
+		this.passengers = passengers;
 	}
 
 	@Override

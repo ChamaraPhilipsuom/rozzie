@@ -4,8 +4,11 @@ import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 import org.rozzie.processor.models.dto.BaseDTO;
+import org.rozzie.processor.models.dto.FlightDTO;
+import org.rozzie.processor.models.dto.PassengerDTO;
 
 import java.util.List;
+import java.util.UUID;
 
 @NodeEntity
 public class PassengerNeo implements BaseNeo {
@@ -17,10 +20,11 @@ public class PassengerNeo implements BaseNeo {
 	@Relationship(type = "FLY_IN", direction = Relationship.OUTGOING)
 	private FlightNeo flight;
 
-	@Relationship(type = "OWNED_BY", direction = Relationship.INCOMING)
-	private List<BaggageNeo> baggages;
-
 	public PassengerNeo() {
+	}
+
+	public PassengerNeo(String passengerId) {
+		this.passengerId = passengerId;
 	}
 
 	public Long getNodeId() {
@@ -39,14 +43,6 @@ public class PassengerNeo implements BaseNeo {
 		this.passengerId = passengerId;
 	}
 
-	public List<BaggageNeo> getBaggages() {
-		return baggages;
-	}
-
-	public void setBaggages(List<BaggageNeo> baggages) {
-		this.baggages = baggages;
-	}
-
 	public FlightNeo getFlight() {
 		return flight;
 	}
@@ -57,6 +53,9 @@ public class PassengerNeo implements BaseNeo {
 
 	@Override
 	public BaseDTO getDTO(BaseDTO dto) {
-		return null;
+		PassengerDTO passengerDTO = (PassengerDTO) dto;
+		passengerDTO.setPassengerId(UUID.fromString(passengerId));
+		passengerDTO.setFlightDTO((FlightDTO) (flight.getDTO(new FlightDTO())));
+		return passengerDTO;
 	}
 }

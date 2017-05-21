@@ -1,6 +1,5 @@
 package org.rozzie.processor.controller;
 
-import org.rozzie.processor.models.Airport;
 import org.rozzie.processor.models.dto.AirportDTO;
 import org.rozzie.processor.services.CassandraService;
 import org.rozzie.processor.services.NeoService;
@@ -21,13 +20,14 @@ public class AirPortController {
 	@Autowired
 	private NeoService neoService;
 
-	@RequestMapping(value = Constants.RequestUri.AirPort.CREATE, method = RequestMethod.POST, produces = "application/json")
+	@RequestMapping(value = Constants.RequestUri.CREATE, method = RequestMethod.POST, produces = "application/json")
 	public AirportDTO createPort(@RequestParam String city, @RequestParam String country) {
 		AirportDTO airportDTO = this.cassandraService.createPort(city, country);
+		airportDTO = this.neoService.createAirPort(airportDTO);
 		return airportDTO;
 	}
 
-	@RequestMapping(value = Constants.RequestUri.AirPort.GET, method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = Constants.RequestUri.GET, method = RequestMethod.GET, produces = "application/json")
 	public AirportDTO getPort(@RequestParam String portId) {
 		return this.cassandraService.getAirPort(portId);
 	}

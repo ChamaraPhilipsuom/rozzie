@@ -1,6 +1,7 @@
 package org.rozzie.processor.models.dao.cassandra;
 
 import org.rozzie.processor.models.dto.BaseDTO;
+import org.rozzie.processor.models.dto.PassengerDTO;
 import org.springframework.data.cassandra.mapping.PrimaryKey;
 import org.springframework.data.cassandra.mapping.Table;
 
@@ -58,6 +59,10 @@ public class PassengerCas implements BaseCas {
 
 	@Override
 	public BaseDTO getDTO(BaseDTO dto) {
-		return null;
+		PassengerDTO passenger = (PassengerDTO) dto;
+		passenger.setName(this.name);
+		passenger.setCountry(this.country);
+		passenger.setContact(this.contact);
+		return passenger;
 	}
 }

@@ -2,6 +2,7 @@ package org.rozzie.processor.models.dao.cassandra;
 
 import org.rozzie.processor.models.Flight;
 import org.rozzie.processor.models.dto.BaseDTO;
+import org.rozzie.processor.models.dto.FlightDTO;
 import org.springframework.data.cassandra.mapping.PrimaryKey;
 import org.springframework.data.cassandra.mapping.Table;
 
@@ -80,6 +81,12 @@ public class FlightCas implements BaseCas {
 
 	@Override
 	public BaseDTO getDTO(BaseDTO dto) {
-		return null;
+		FlightDTO flightDTO = (FlightDTO) dto;
+		flightDTO.setFlightID(this.flightID);
+		flightDTO.setPlannedArrivalTime(LocalDateTime.parse(this.plannedArrivalTime));
+		flightDTO.setPlannedDepatureTime(LocalDateTime.parse(this.plannedDepatureTime));
+		flightDTO.setActualArrivalTime(LocalDateTime.parse(this.actualArrivalTime));
+		flightDTO.setActualDepatureTime(LocalDateTime.parse(this.actualDepatureTime));
+		return flightDTO;
 	}
 }

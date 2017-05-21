@@ -20,6 +20,10 @@ public class PassengerDTO implements BaseDTO {
 	public PassengerDTO() {
 	}
 
+	public PassengerDTO(UUID passengerId) {
+		this.passengerId = passengerId;
+	}
+
 	public UUID getPassengerId() {
 		return passengerId;
 	}

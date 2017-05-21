@@ -10,8 +10,13 @@ public class BaggageDTO implements BaseDTO {
 	private UUID baggageId;
 	private String baggageType;
 	private float weight;
+	private PassengerDTO owner;
 
 	public BaggageDTO() {
+	}
+
+	public BaggageDTO(UUID baggageId) {
+		this.baggageId = baggageId;
 	}
 
 	public BaggageDTO(UUID baggageId, String baggageType, float weight) {
@@ -42,6 +47,14 @@ public class BaggageDTO implements BaseDTO {
 
 	public void setWeight(float weight) {
 		this.weight = weight;
+	}
+
+	public PassengerDTO getOwner() {
+		return owner;
+	}
+
+	public void setOwner(PassengerDTO owner) {
+		this.owner = owner;
 	}
 
 	@Override

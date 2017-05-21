@@ -5,7 +5,7 @@ import org.springframework.data.neo4j.repository.GraphRepository;
 import org.springframework.stereotype.Component;
 
 @Component("neoAirRepo")
-public interface AirportRepository extends GraphRepository<AirportNeo> {
+public interface AirportRepo extends GraphRepository<AirportNeo> {
 
 	public AirportNeo findByAirportId(String airportId);
 }

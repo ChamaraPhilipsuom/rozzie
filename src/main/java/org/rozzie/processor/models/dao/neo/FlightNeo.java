@@ -3,7 +3,9 @@ package org.rozzie.processor.models.dao.neo;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
+import org.rozzie.processor.models.dto.AirportDTO;
 import org.rozzie.processor.models.dto.BaseDTO;
+import org.rozzie.processor.models.dto.FlightDTO;
 
 import java.util.UUID;
 
@@ -30,8 +32,8 @@ public class FlightNeo implements BaseNeo {
 		return nodeId;
 	}
 
-	public UUID getFlightId() {
-		return UUID.fromString(flightId);
+	public String getFlightId() {
+		return flightId;
 	}
 
 	public void setFlightId(UUID flightId) {
@@ -56,6 +58,10 @@ public class FlightNeo implements BaseNeo {
 
 	@Override
 	public BaseDTO getDTO(BaseDTO dto) {
-		return null;
+		FlightDTO flight = (FlightDTO) dto;
+		flight.setFlightID(UUID.fromString(this.flightId));
+		flight.setSource((AirportDTO) sourcePort.getDTO(new AirportDTO()));
+		flight.setDestination((AirportDTO) destinationPort.getDTO(new AirportDTO()));
+		return flight;
 	}
 }

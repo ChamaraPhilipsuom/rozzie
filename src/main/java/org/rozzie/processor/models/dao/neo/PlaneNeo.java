@@ -2,7 +2,11 @@ package org.rozzie.processor.models.dao.neo;
 
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
+import org.rozzie.processor.models.Plane;
 import org.rozzie.processor.models.dto.BaseDTO;
+import org.rozzie.processor.models.dto.PlaneDTO;
+
+import java.util.UUID;
 
 @NodeEntity
 public class PlaneNeo implements BaseNeo {
@@ -11,7 +15,13 @@ public class PlaneNeo implements BaseNeo {
 	private Long nodeId;
 
 	private String planeId;
-	private String planeNumber;
+
+	public PlaneNeo() {
+	}
+
+	public PlaneNeo(String planeId) {
+		this.planeId = planeId;
+	}
 
 	public String getPlaneId() {
 		return planeId;
@@ -21,16 +31,10 @@ public class PlaneNeo implements BaseNeo {
 		this.planeId = planeId;
 	}
 
-	public String getPlaneNumber() {
-		return planeNumber;
-	}
-
-	public void setPlaneNumber(String planeNumber) {
-		this.planeNumber = planeNumber;
-	}
-
 	@Override
 	public BaseDTO getDTO(BaseDTO dto) {
-		return null;
+		PlaneDTO plane = (PlaneDTO) dto;
+		plane.setPlaneId(UUID.fromString(this.planeId));
+		return plane;
 	}
 }

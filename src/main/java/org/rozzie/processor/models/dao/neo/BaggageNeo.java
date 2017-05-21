@@ -3,7 +3,12 @@ package org.rozzie.processor.models.dao.neo;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
+import org.rozzie.processor.models.dto.BaggageDTO;
 import org.rozzie.processor.models.dto.BaseDTO;
+import org.rozzie.processor.models.dto.PassengerDTO;
+
+import java.util.List;
+import java.util.UUID;
 
 @NodeEntity
 public class BaggageNeo implements BaseNeo {
@@ -16,6 +21,10 @@ public class BaggageNeo implements BaseNeo {
 	private PassengerNeo owner;
 
 	public BaggageNeo() {
+	}
+
+	public BaggageNeo(String baggageId) {
+		this.baggageId = baggageId;
 	}
 
 	public Long getNodeId() {
@@ -34,8 +43,20 @@ public class BaggageNeo implements BaseNeo {
 		this.baggageId = baggageId;
 	}
 
+	public PassengerNeo getOwner() {
+		return owner;
+	}
+
+	public void setOwner(PassengerNeo owner) {
+		this.owner = owner;
+	}
+
 	@Override
 	public BaseDTO getDTO(BaseDTO dto) {
-		return null;
+		BaggageDTO bag = (BaggageDTO) dto;
+		PassengerDTO passenger = new PassengerDTO();
+		passenger.setPassengerId(UUID.fromString(owner.getPassengerId()));
+		bag.setOwner(passenger);
+		return bag;
 	}
 }

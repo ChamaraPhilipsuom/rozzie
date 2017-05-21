@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 @Component("cassandraAirRepo")
-public interface AirportRepository extends CassandraRepository<AirportCas> {
+public interface AirportRepo extends CassandraRepository<AirportCas> {
 
-	@Query("Select * from airportdao where airportId=?0")
+	@Query("Select * from airport where airportId=?0")
 	public AirportCas findByAirportId(UUID airportId);
 }

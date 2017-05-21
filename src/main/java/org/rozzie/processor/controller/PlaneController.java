@@ -20,9 +20,15 @@ public class PlaneController {
 	@Autowired
 	private NeoService neoService;
 
-	@RequestMapping(value = Constants.RequestUri.Passenger.CREATE, method = RequestMethod.POST, produces = "application/json")
+	@RequestMapping(value = Constants.RequestUri.CREATE, method = RequestMethod.POST, produces = "application/json")
 	public PlaneDTO createPlane(@RequestParam String airline, @RequestParam String planeNumber) {
 		PlaneDTO plane = cassandraService.createPlane(airline, planeNumber);
+		return plane;
+	}
+
+	@RequestMapping(value = Constants.RequestUri.GET, method = RequestMethod.GET, produces = "application/json")
+	public PlaneDTO getPlane(@RequestParam String planeId) {
+		PlaneDTO plane = cassandraService.getPlain(planeId);
 		return plane;
 	}
 }

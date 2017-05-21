@@ -1,6 +1,5 @@
 package org.rozzie.processor.services;
 
-import org.apache.commons.lang3.StringUtils;
 import org.rozzie.processor.listeners.FlightDepartureEventListener;
 import org.rozzie.processor.models.Airport;
 import org.rozzie.processor.models.Flight;
@@ -14,8 +13,11 @@ import org.rozzie.processor.models.dto.BaggageDTO;
 import org.rozzie.processor.models.dto.FlightDTO;
 import org.rozzie.processor.models.dto.PassengerDTO;
 import org.rozzie.processor.models.dto.PlaneDTO;
-import org.rozzie.processor.repositories.cassandra.AirportRepository;
-import org.rozzie.processor.repositories.cassandra.FlightRepository;
+import org.rozzie.processor.repositories.cassandra.AirportRepo;
+import org.rozzie.processor.repositories.cassandra.BaggageRepo;
+import org.rozzie.processor.repositories.cassandra.FlightRepo;
+import org.rozzie.processor.repositories.cassandra.PassengerRepo;
+import org.rozzie.processor.repositories.cassandra.PlaneRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.cassandra.repository.config.EnableCassandraRepositories;
 import org.springframework.stereotype.Service;
@@ -28,24 +30,38 @@ import java.util.UUID;
 public class CassandraService {
 
 	@Autowired
-	private FlightRepository flightRepository;
+	private FlightRepo flightRepo;
 
 	@Autowired
-	private AirportRepository airportRepository;
+	private AirportRepo airportRepo;
+
+	@Autowired
+	private BaggageRepo baggageRepo;
+
+	@Autowired
+	private PassengerRepo passengerRepo;
+
+	@Autowired
+	private PlaneRepo planeRepo;
 
 	public AirportDTO createPort(String city, String country) {
 		AirportCas port = new AirportCas(UUID.randomUUID(), city, country);
-		port = airportRepository.save(port);
+		port = airportRepo.save(port);
 		return (AirportDTO) port.getDTO(new AirportDTO());
+	}
+
+	public BaggageDTO createBaggage(String baggageType, float weight) {
+		BaggageCas bag = new BaggageCas(UUID.randomUUID(), baggageType, weight);
+		return (BaggageDTO) bag.getDTO(new BaggageDTO());
 	}
 
 	public FlightDTO createFlight(LocalDateTime plannedArrivalTime, LocalDateTime plannedDepatureTime,
 			LocalDateTime actualArrivalTime, LocalDateTime actualDepatureTime, UUID sourceId, UUID destinationId) {
-		AirportCas sourceDao = airportRepository.findByAirportId(sourceId);
-		AirportCas destinatinDao = airportRepository.findByAirportId(destinationId);
+		AirportCas sourceDao = airportRepo.findByAirportId(sourceId);
+		AirportCas destinatinDao = airportRepo.findByAirportId(destinationId);
 		FlightCas flightCas = new FlightCas(UUID.randomUUID(), plannedArrivalTime, plannedDepatureTime,
 				actualArrivalTime, actualDepatureTime);
-		flightCas = flightRepository.save(flightCas);
+		flightCas = flightRepo.save(flightCas);
 		AirportDTO sourceDTO = new AirportDTO(sourceDao.getAirportId(), sourceDao.getCity(), sourceDao.getCountry());
 		AirportDTO destDTO = new AirportDTO(destinatinDao.getAirportId(), destinatinDao.getCity(),
 				destinatinDao.getCountry());
@@ -61,31 +77,43 @@ public class CassandraService {
 		return (PassengerDTO) passenger.getDTO(new PassengerDTO());
 	}
 
-	public BaggageDTO createBaggage(String baggageType, float weight) {
-		BaggageCas bag = new BaggageCas(UUID.randomUUID(), baggageType, weight);
-		return (BaggageDTO) bag.getDTO(new BaggageDTO());
-	}
-
 	public PlaneDTO createPlane(String airline, String planeNumber) {
 		PlaneCas plane = new PlaneCas(UUID.randomUUID(), airline, planeNumber);
 		return (PlaneDTO) plane.getDTO(new PlaneDTO());
 	}
 
-	public FlightDTO getFlight(String uuid, FlightDTO flightDTO) {
-		FlightCas flightCas = flightRepository.findByFlightId(UUID.fromString(uuid));
-		return (FlightDTO) flightDTO.readCassandra(flightCas);
+	public AirportDTO getAirPort(String uuid) {
+		AirportCas port = airportRepo.findByAirportId(UUID.fromString(uuid));
+		return (AirportDTO) port.getDTO(new AirportDTO());
+	}
+
+	public BaggageDTO getBaggage(String uuid) {
+		BaggageCas bag = baggageRepo.findByBagId(UUID.fromString(uuid));
+		return (BaggageDTO) bag.getDTO(new BaggageDTO());
+	}
+
+	public FlightDTO getFlight(String uuid) {
+		FlightCas flightCas = flightRepo.findByFlightId(UUID.fromString(uuid));
+		return (FlightDTO) flightCas.getDTO(new FlightDTO());
+	}
+
+	public PassengerDTO getPassenger(String uuid) {
+		PassengerCas passenger = passengerRepo.findByPassengerId(UUID.fromString(uuid));
+		return (PassengerDTO) passenger.getDTO(new PassengerDTO());
+	}
+
+	public PlaneDTO getPlain(String planeId) {
+		PlaneCas plane = planeRepo.findByPlaneId(planeId);
+		return (PlaneDTO) plane.getDTO(new PlaneDTO());
 	}
 
 	public FlightDTO changeDepatureTime(String flightId, LocalDateTime newDepatureTime) {
 		UUID uuid = UUID.fromString(flightId);
-		Flight flight = getFlightFromDAO(flightRepository.findByFlightId(uuid));
+		Flight flight = getFlightFromDAO(flightRepo.findByFlightId(uuid));
 		flight.addListener(new FlightDepartureEventListener());
 		flight.setActualDepatureTime(newDepatureTime);
-		FlightCas flightCas = flightRepository.save(new FlightCas(flight));
+		FlightCas flightCas = flightRepo.save(new FlightCas(flight));
 		return getFlightDTO(getFlightFromDAO(flightCas));
-	}
-	public AirportDTO getAirPort(String uuid) {
-		return getPortDTO(getPortFromDAO(airportRepository.findByAirportId(UUID.fromString(uuid))));
 	}
 
 	/*

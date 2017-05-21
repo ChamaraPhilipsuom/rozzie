@@ -29,8 +29,8 @@ public class AirportNeo implements BaseNeo {
 		this.nodeId = nodeId;
 	}
 
-	public UUID getAirportId() {
-		return UUID.fromString(airportId);
+	public String getAirportId() {
+		return this.airportId;
 	}
 
 	public void setAirportId(UUID airportId) {
@@ -40,6 +40,7 @@ public class AirportNeo implements BaseNeo {
 	@Override
 	public BaseDTO getDTO(BaseDTO dto) {
 		AirportDTO airportDTO = (AirportDTO) dto;
+		airportDTO.setAirportId(UUID.fromString(this.airportId));
 		return airportDTO;
 	}
 }

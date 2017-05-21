@@ -9,8 +9,8 @@ import java.util.UUID;
 
 import org.rozzie.processor.models.dao.cassandra.AirportCas;
 import org.rozzie.processor.models.dao.cassandra.FlightCas;
-import org.rozzie.processor.repositories.cassandra.AirportRepository;
-import org.rozzie.processor.repositories.cassandra.FlightRepository;
+import org.rozzie.processor.repositories.cassandra.AirportRepo;
+import org.rozzie.processor.repositories.cassandra.FlightRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -20,16 +20,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class RozzieApp implements CommandLineRunner {
 
 	@Autowired
-	private FlightRepository flightRepository;
+	private FlightRepo flightRepo;
 
 	@Autowired
-	private AirportRepository airportRepository;
+	private AirportRepo airportRepo;
 
 	@Override
 	public void run(String... args) throws Exception {
 		try {
-			flightRepository.deleteAll();
-			airportRepository.deleteAll();
+			flightRepo.deleteAll();
+			airportRepo.deleteAll();
 
 			LocalDateTime plannedArrival = LocalDateTime.now().plusHours(1);
 			LocalDateTime plannedDeparture = LocalDateTime.now().plusHours(3);
@@ -40,9 +40,9 @@ public class RozzieApp implements CommandLineRunner {
 
 			Flight flight = new Flight(UUID.randomUUID(), plannedArrival, plannedDeparture, plannedArrival,
 					plannedDeparture, source, destination);
-			flightRepository.save(new FlightCas(flight));
-			airportRepository.save(new AirportCas(source));
-			airportRepository.save(new AirportCas(destination));
+			flightRepo.save(new FlightCas(flight));
+			airportRepo.save(new AirportCas(source));
+			airportRepo.save(new AirportCas(destination));
 
 			FlightDepartureEventListener listener = new FlightDepartureEventListener();
 			flight.addListener(listener);

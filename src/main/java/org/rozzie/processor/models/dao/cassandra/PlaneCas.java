@@ -1,6 +1,7 @@
 package org.rozzie.processor.models.dao.cassandra;
 
 import org.rozzie.processor.models.dto.BaseDTO;
+import org.rozzie.processor.models.dto.PlaneDTO;
 import org.springframework.data.cassandra.mapping.PrimaryKey;
 import org.springframework.data.cassandra.mapping.Table;
 
@@ -48,6 +49,10 @@ public class PlaneCas implements BaseCas {
 
 	@Override
 	public BaseDTO getDTO(BaseDTO dto) {
-		return null;
+		PlaneDTO plane = (PlaneDTO) dto;
+		plane.setPlaneId(this.planeId);
+		plane.setAirLine(this.airLine);
+		plane.setPlaneNumber(this.planeNumber);
+		return plane;
 	}
 }
