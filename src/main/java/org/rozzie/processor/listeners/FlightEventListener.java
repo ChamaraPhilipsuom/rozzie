@@ -4,6 +4,7 @@ package org.rozzie.processor.listeners;
 import org.rozzie.processor.events.AirlineEvent;
 import org.rozzie.processor.events.CheckInEvent;
 import org.rozzie.processor.events.FlightBookingEvent;
+import org.rozzie.processor.events.FlightTakeOffEvent;
 import org.rozzie.processor.models.event.sources.Flight;
 import org.rozzie.processor.models.event.sources.Passenger;
 import org.rozzie.processor.utils.Constants;
@@ -23,12 +24,18 @@ public class FlightEventListener extends AirlineListener{
                         "booked the flight " +
                         "successfully.");
             }
-        } else if(event instanceof CheckInEvent){
-            if(event.getSource() instanceof Flight){
-                Flight flight = (Flight) event.getSource();
-                System.out.println(Constants.EVENT_MESSAGE + "Message at the airline terminal... \n One more " +
-                        "passenger checked in");
-            }
-        }
-    }
+		} else if (event instanceof CheckInEvent) {
+			if (event.getSource() instanceof Flight) {
+				Flight flight = (Flight) event.getSource();
+				System.out.println(Constants.EVENT_MESSAGE + "Message at the airline terminal... \n One more "
+						+ "passenger checked in for the flight " + flight.getFlightID());
+			}
+		} else if (event instanceof FlightTakeOffEvent) {
+			if (event.getSource() instanceof Flight) {
+				Flight flight = (Flight) event.getSource();
+				System.out.println(Constants.EVENT_MESSAGE + "Message at the airline terminal... \n Flight "
+						+ flight.getFlightID() + " is taking off now.");
+			}
+		}
+	}
 }

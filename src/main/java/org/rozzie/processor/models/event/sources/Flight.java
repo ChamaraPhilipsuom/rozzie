@@ -5,6 +5,7 @@ import org.rozzie.processor.events.CheckInEvent;
 import org.rozzie.processor.events.FlightArrivalTimeChangeEvent;
 import org.rozzie.processor.events.FlightBookingEvent;
 import org.rozzie.processor.events.FlightDepatureTimeChangeEvent;
+import org.rozzie.processor.events.FlightTakeOffEvent;
 import org.rozzie.processor.listeners.AirlineListener;
 
 import java.time.Duration;
@@ -116,6 +117,10 @@ public class Flight extends EventSource {
 
 	public void passengerCheckIn(Passenger passenger){
 		fireChangeEvent(new CheckInEvent(this));
+	}
+
+	public void takeOff(){
+		fireChangeEvent(new FlightTakeOffEvent(this));
 	}
 
 }

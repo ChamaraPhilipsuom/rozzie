@@ -1,10 +1,12 @@
 package org.rozzie.processor.controller;
 
+import org.rozzie.processor.listeners.FlightEventListener;
 import org.rozzie.processor.models.dao.neo.FlightNeo;
 import org.rozzie.processor.models.dto.AirportDTO;
 import org.rozzie.processor.models.dto.FlightDTO;
 import org.rozzie.processor.models.dto.PassengerDTO;
 import org.rozzie.processor.models.dto.PlaneDTO;
+import org.rozzie.processor.models.event.sources.Flight;
 import org.rozzie.processor.services.CassandraService;
 import org.rozzie.processor.services.NeoService;
 import org.rozzie.processor.utils.Constants;
@@ -76,5 +78,14 @@ public class FlightController {
 	@RequestMapping(value = Constants.RequestUri.Flight.CHANGE_ARRIVAL, method = RequestMethod.POST, produces = "application/json")
 	public FlightDTO changeArrivalTime(@RequestParam String flightId, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime newArrivalTime) {
 		return this.cassandraService.changeArrivalTime(flightId, newArrivalTime);
+	}
+
+	@RequestMapping(value = Constants.RequestUri.Flight.TAKE_OFF, method = RequestMethod.POST, produces = "application/json")
+	public FlightDTO takeOff(@RequestParam String flightId){
+    	FlightDTO flightDTO = this.cassandraService.getFlight(flightId);
+		Flight flight = new Flight(flightDTO.getFlightID());
+		flight.addListener(new FlightEventListener());
+		flight.takeOff();
+		return flightDTO;
 	}
 }
