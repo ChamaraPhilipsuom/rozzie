@@ -65,24 +65,17 @@ public class NeoService {
 	}
 
 	public FlightNeo createFlight(LocalDateTime plannedArrivalTime, LocalDateTime plannedDepatureTime,
-			LocalDateTime actualArrivalTime, LocalDateTime actualDepatureTime, UUID sourceId, UUID destinationId,
-			UUID flightId) {
+			LocalDateTime actualArrivalTime, LocalDateTime actualDepatureTime, String sourceId, String destinationId,
+			String flightId, String planeId) {
 
-		AirportNeo sourceDao = airportRepo.findByAirportId(sourceId.toString());
-		AirportNeo destinationDao = airportRepo.findByAirportId(destinationId.toString());
-		if (Util.isNull(sourceDao)) {
-			sourceDao = new AirportNeo(sourceId);
-			sourceDao = airportRepo.save(sourceDao);
-		}
-		if (Util.isNull(destinationDao)) {
-			destinationDao = new AirportNeo(destinationId);
-			destinationDao = airportRepo.save(destinationDao);
-		}
+		AirportNeo sourceDao = airportRepo.findByAirportId(sourceId);
+		AirportNeo destinationDao = airportRepo.findByAirportId(destinationId);
+		PlaneNeo planeNeo = planeRepo.findByPlaneId(planeId);
 		FlightNeo dao = new FlightNeo();
 		dao.setFlightId(flightId);
 		dao.setSourcePort(sourceDao);
 		dao.setDestinationPort(destinationDao);
-
+		dao.setPlane(planeNeo);
 		return flightRepo.save(dao);
 
 	}
@@ -116,6 +109,7 @@ public class NeoService {
 		FlightNeo flightNeo = flightRepo.findByFlightId(flight.getFlightID().toString());
 		flight.setSource((AirportDTO) (flightNeo.getSourcePort().getDTO(new AirportDTO())));
 		flight.setDestination((AirportDTO) (flightNeo.getSourcePort().getDTO(new AirportDTO())));
+		flight.setPlane((PlaneDTO) (flightNeo.getPlane().getDTO(flight.getPlane())));
 		return flight;
 	}
 

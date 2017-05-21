@@ -50,6 +50,9 @@ public class BaggageDTO implements BaseDTO {
 	}
 
 	public PassengerDTO getOwner() {
+		if(owner == null) {
+			owner = new PassengerDTO();
+		}
 		return owner;
 	}
 

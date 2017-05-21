@@ -10,6 +10,6 @@ import java.util.UUID;
 @Component("cassandraPassengerRepo")
 public interface PassengerRepo extends CassandraRepository<PassengerCas> {
 
-	@Query("Select * from passenger where passengerId=?0")
+	@Query("Select * from passengercas where passengerId=?0")
 	public PassengerCas findByPassengerId(UUID passengerId);
 }

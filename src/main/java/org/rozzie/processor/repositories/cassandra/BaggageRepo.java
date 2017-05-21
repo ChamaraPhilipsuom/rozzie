@@ -9,6 +9,6 @@ import java.util.UUID;
 
 @Component("cassandraBagRepo")
 public interface BaggageRepo extends CassandraRepository<BaggageCas> {
-	@Query("Select * from baggage where baggageId=?0")
+	@Query("Select * from baggagecas where baggageId=?0")
 	public BaggageCas findByBagId(UUID baggageId);
 }

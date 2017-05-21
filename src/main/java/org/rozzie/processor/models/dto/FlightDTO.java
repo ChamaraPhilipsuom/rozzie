@@ -22,6 +22,7 @@ public class FlightDTO implements BaseDTO {
 	private LocalDateTime actualArrivalTime;
 	private AirportDTO source;
 	private AirportDTO destination;
+	private PlaneDTO plane;
 	private List<PassengerDTO> passengers;
 
 	public FlightDTO() {
@@ -84,6 +85,9 @@ public class FlightDTO implements BaseDTO {
 	}
 
 	public AirportDTO getSource() {
+		if(source == null){
+			source = new AirportDTO();
+		}
 		return source;
 	}
 
@@ -92,6 +96,9 @@ public class FlightDTO implements BaseDTO {
 	}
 
 	public AirportDTO getDestination() {
+		if(destination == null){
+			destination = new AirportDTO();
+		}
 		return destination;
 	}
 
@@ -105,6 +112,17 @@ public class FlightDTO implements BaseDTO {
 
 	public void setPassengers(List<PassengerDTO> passengers) {
 		this.passengers = passengers;
+	}
+
+	public PlaneDTO getPlane() {
+		if(plane == null){
+			this.plane = new PlaneDTO();
+		}
+		return plane;
+	}
+
+	public void setPlane(PlaneDTO plane) {
+		this.plane = plane;
 	}
 
 	@Override

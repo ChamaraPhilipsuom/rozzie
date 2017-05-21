@@ -2,7 +2,6 @@ package org.rozzie.processor.models.dao.neo;
 
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.NodeEntity;
-import org.rozzie.processor.models.Plane;
 import org.rozzie.processor.models.dto.BaseDTO;
 import org.rozzie.processor.models.dto.PlaneDTO;
 

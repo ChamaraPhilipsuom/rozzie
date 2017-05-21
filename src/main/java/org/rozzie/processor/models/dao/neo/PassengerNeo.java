@@ -55,7 +55,7 @@ public class PassengerNeo implements BaseNeo {
 	public BaseDTO getDTO(BaseDTO dto) {
 		PassengerDTO passengerDTO = (PassengerDTO) dto;
 		passengerDTO.setPassengerId(UUID.fromString(passengerId));
-		passengerDTO.setFlightDTO((FlightDTO) (flight.getDTO(new FlightDTO())));
+		passengerDTO.setFlightDTO((FlightDTO) (flight.getDTO(passengerDTO.getFlightDTO())));
 		return passengerDTO;
 	}
 }

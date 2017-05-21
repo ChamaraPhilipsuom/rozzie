@@ -54,7 +54,8 @@ public class BaggageNeo implements BaseNeo {
 	@Override
 	public BaseDTO getDTO(BaseDTO dto) {
 		BaggageDTO bag = (BaggageDTO) dto;
-		PassengerDTO passenger = new PassengerDTO();
+		bag.setBaggageId(UUID.fromString(this.baggageId));
+		PassengerDTO passenger = bag.getOwner();
 		passenger.setPassengerId(UUID.fromString(owner.getPassengerId()));
 		bag.setOwner(passenger);
 		return bag;

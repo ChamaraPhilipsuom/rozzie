@@ -65,6 +65,9 @@ public class PassengerDTO implements BaseDTO {
 	}
 
 	public FlightDTO getFlightDTO() {
+		if(this.flightDTO == null) {
+			flightDTO = new FlightDTO();
+		}
 		return flightDTO;
 	}
 

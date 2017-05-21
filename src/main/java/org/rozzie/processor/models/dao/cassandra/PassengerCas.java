@@ -20,6 +20,7 @@ public class PassengerCas implements BaseCas {
 	}
 
 	public PassengerCas(UUID passengerId, String name, String country, String contact) {
+		this.passengerId = passengerId;
 		this.name = name;
 		this.country = country;
 		this.contact = contact;
@@ -60,6 +61,7 @@ public class PassengerCas implements BaseCas {
 	@Override
 	public BaseDTO getDTO(BaseDTO dto) {
 		PassengerDTO passenger = (PassengerDTO) dto;
+		passenger.setPassengerId(this.passengerId);
 		passenger.setName(this.name);
 		passenger.setCountry(this.country);
 		passenger.setContact(this.contact);

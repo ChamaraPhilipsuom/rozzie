@@ -23,12 +23,13 @@ public class PlaneController {
 	@RequestMapping(value = Constants.RequestUri.CREATE, method = RequestMethod.POST, produces = "application/json")
 	public PlaneDTO createPlane(@RequestParam String airline, @RequestParam String planeNumber) {
 		PlaneDTO plane = cassandraService.createPlane(airline, planeNumber);
+		plane = neoService.createPlane(plane);
 		return plane;
 	}
 
 	@RequestMapping(value = Constants.RequestUri.GET, method = RequestMethod.GET, produces = "application/json")
 	public PlaneDTO getPlane(@RequestParam String planeId) {
-		PlaneDTO plane = cassandraService.getPlain(planeId);
+		PlaneDTO plane = cassandraService.getPlane(planeId);
 		return plane;
 	}
 }

@@ -10,6 +10,6 @@ import java.util.UUID;
 @Component("cassandraFlightRepo")
 public interface FlightRepo extends CassandraRepository<FlightCas> {
 
-	@Query("Select * from flight where flightID=?0")
+	@Query("Select * from flightcas where flightID=?0")
 	public FlightCas findByFlightId(UUID flightId);
 }

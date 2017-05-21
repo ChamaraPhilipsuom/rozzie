@@ -19,6 +19,7 @@ public class Constants {
 		public static class Flight {
 			public static final String CONTROLLER = "/flight";
 			public static final String CHANGE_DEPATURE = "/changeDepature";
+			public static final String CHANGE_ARRIVAL = "/changeArrival";
 		}
 		public static class Passenger {
 			public static final String CONTROLLER = "/passenger";
@@ -31,5 +32,6 @@ public class Constants {
 
 	public static class EventName {
 		public static final String FLIGHT_DEPATURE_TIMECHANGE = "depatureTimeChange";
+		public static final String FLIGHT_ARRIVAL_TIMECHANGE = "arrivalTimeChange";
 	}
 }

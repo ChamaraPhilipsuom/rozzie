@@ -6,6 +6,7 @@ import org.neo4j.ogm.annotation.Relationship;
 import org.rozzie.processor.models.dto.AirportDTO;
 import org.rozzie.processor.models.dto.BaseDTO;
 import org.rozzie.processor.models.dto.FlightDTO;
+import org.rozzie.processor.models.dto.PlaneDTO;
 
 import java.util.UUID;
 
@@ -22,10 +23,13 @@ public class FlightNeo implements BaseNeo {
 	@Relationship(type = "DEST_PORT", direction = Relationship.OUTGOING)
 	private AirportNeo destinationPort;
 
+	@Relationship(type = "AIR_BUS", direction = Relationship.OUTGOING)
+	private PlaneNeo plane;
+
 	public FlightNeo() {
 	}
-	public FlightNeo(UUID flightId) {
-		this.flightId = flightId.toString();
+	public FlightNeo(String flightId) {
+		this.flightId = flightId;
 	}
 
 	public Long getNodeId() {
@@ -36,8 +40,8 @@ public class FlightNeo implements BaseNeo {
 		return flightId;
 	}
 
-	public void setFlightId(UUID flightId) {
-		this.flightId = flightId.toString();
+	public void setFlightId(String flightId) {
+		this.flightId = flightId;
 	}
 
 	public AirportNeo getSourcePort() {
@@ -56,12 +60,21 @@ public class FlightNeo implements BaseNeo {
 		this.destinationPort = destinationPort;
 	}
 
+	public PlaneNeo getPlane() {
+		return plane;
+	}
+
+	public void setPlane(PlaneNeo plane) {
+		this.plane = plane;
+	}
+
 	@Override
 	public BaseDTO getDTO(BaseDTO dto) {
 		FlightDTO flight = (FlightDTO) dto;
 		flight.setFlightID(UUID.fromString(this.flightId));
-		flight.setSource((AirportDTO) sourcePort.getDTO(new AirportDTO()));
-		flight.setDestination((AirportDTO) destinationPort.getDTO(new AirportDTO()));
+		flight.setSource((AirportDTO) sourcePort.getDTO(flight.getSource()));
+		flight.setDestination((AirportDTO) destinationPort.getDTO(flight.getDestination()));
+		flight.setPlane((PlaneDTO) plane.getDTO(flight.getPlane()));
 		return flight;
 	}
 }
