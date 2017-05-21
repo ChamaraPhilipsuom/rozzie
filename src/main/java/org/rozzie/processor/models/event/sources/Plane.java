@@ -1,4 +1,4 @@
-package org.rozzie.processor.models;
+package org.rozzie.processor.models.event.sources;
 
 import java.util.UUID;
 

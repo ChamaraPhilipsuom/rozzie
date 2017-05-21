@@ -1,18 +1,8 @@
 package org.rozzie.processor;
 
-import org.rozzie.processor.listeners.FlightDepartureEventListener;
-import org.rozzie.processor.models.Airport;
-import org.rozzie.processor.models.Flight;
-
-import java.time.LocalDateTime;
-import java.util.UUID;
-
-import org.rozzie.processor.models.dao.cassandra.AirportCas;
-import org.rozzie.processor.models.dao.cassandra.FlightCas;
 import org.rozzie.processor.repositories.cassandra.AirportRepo;
 import org.rozzie.processor.repositories.cassandra.FlightRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

@@ -1,8 +1,9 @@
 package org.rozzie.processor.services;
 
+import org.rozzie.processor.listeners.FlightArrivalEventListener;
 import org.rozzie.processor.listeners.FlightDepartureEventListener;
-import org.rozzie.processor.models.Airport;
-import org.rozzie.processor.models.Flight;
+import org.rozzie.processor.models.event.sources.Airport;
+import org.rozzie.processor.models.event.sources.Flight;
 import org.rozzie.processor.models.dao.cassandra.AirportCas;
 import org.rozzie.processor.models.dao.cassandra.BaggageCas;
 import org.rozzie.processor.models.dao.cassandra.FlightCas;
@@ -118,9 +119,9 @@ public class CassandraService {
 		UUID uuid = UUID.fromString(flightId);
 		FlightCas flightCas = flightRepo.findByFlightId(uuid);
 		Flight flight = getFlightFromDAO(flightCas);
-		flight.addListener(new FlightDepartureEventListener());
-		flight.setActualDepatureTime(newArrivalTime);
-		flightCas.setActualDepatureTime(newArrivalTime);
+		flight.addListener(new FlightArrivalEventListener());
+		flight.setActualArrivalTime(newArrivalTime);
+		flightCas.setActualArrivalTime(newArrivalTime);
 		flightCas = flightRepo.save(flightCas);
 		return getFlightDTO(getFlightFromDAO(flightCas));
 	}

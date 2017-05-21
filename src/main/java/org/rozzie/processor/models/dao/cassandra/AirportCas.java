@@ -1,7 +1,6 @@
 package org.rozzie.processor.models.dao.cassandra;
 
-import com.datastax.driver.core.utils.UUIDs;
-import org.rozzie.processor.models.Airport;
+import org.rozzie.processor.models.event.sources.Airport;
 import org.rozzie.processor.models.dto.AirportDTO;
 import org.rozzie.processor.models.dto.BaseDTO;
 import org.springframework.data.cassandra.mapping.PrimaryKey;

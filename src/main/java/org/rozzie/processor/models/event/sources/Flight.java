@@ -1,10 +1,9 @@
-package org.rozzie.processor.models;
+package org.rozzie.processor.models.event.sources;
 
-import org.neo4j.ogm.annotation.NodeEntity;
 import org.rozzie.processor.events.AirlineEvent;
+import org.rozzie.processor.events.FlightArrivalTimeChangeEvent;
 import org.rozzie.processor.events.FlightDepatureTimeChangeEvent;
 import org.rozzie.processor.listeners.AirlineListener;
-import org.rozzie.processor.listeners.FlightDepartureEventListener;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -57,7 +56,7 @@ public class Flight extends EventSource {
 
 	public void setActualDepatureTime(LocalDateTime actualDepatureTime) {
 		this.actualDepatureTime = actualDepatureTime;
-		fireDepatureTimeChangeEvent();
+		fireChangeEvent(new FlightDepatureTimeChangeEvent(this));
 	}
 
 	public LocalDateTime getActualArrivalTime() {
@@ -66,6 +65,7 @@ public class Flight extends EventSource {
 
 	public void setActualArrivalTime(LocalDateTime actualArrivalTime) {
 		this.actualArrivalTime = actualArrivalTime;
+		fireChangeEvent(new FlightArrivalTimeChangeEvent(this));
 	}
 
 	public UUID getFlightID() {
@@ -104,8 +104,7 @@ public class Flight extends EventSource {
 		this.plane = plane;
 	}
 
-	private synchronized void fireDepatureTimeChangeEvent() {
-		AirlineEvent event = new FlightDepatureTimeChangeEvent(this);
+	private synchronized void fireChangeEvent(AirlineEvent event) {
 		for (AirlineListener listener : getListeners()) {
 			listener.changeReceived(event);
 		}

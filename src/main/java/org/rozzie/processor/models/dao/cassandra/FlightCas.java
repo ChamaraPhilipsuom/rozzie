@@ -1,12 +1,11 @@
 package org.rozzie.processor.models.dao.cassandra;
 
-import org.rozzie.processor.models.Flight;
+import org.rozzie.processor.models.event.sources.Flight;
 import org.rozzie.processor.models.dto.BaseDTO;
 import org.rozzie.processor.models.dto.FlightDTO;
 import org.springframework.data.cassandra.mapping.PrimaryKey;
 import org.springframework.data.cassandra.mapping.Table;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.UUID;
 

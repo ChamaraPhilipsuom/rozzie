@@ -1,7 +1,5 @@
 package org.rozzie.processor.models.dto;
 
-import org.rozzie.processor.models.Baggage;
-
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import java.util.List;

@@ -1,13 +1,7 @@
 package org.rozzie.processor.models.dto;
 
-import org.rozzie.processor.models.dao.cassandra.BaseCas;
-import org.rozzie.processor.models.dao.cassandra.FlightCas;
-import org.rozzie.processor.models.dao.neo.BaseNeo;
-import org.rozzie.processor.models.dao.neo.FlightNeo;
-
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;

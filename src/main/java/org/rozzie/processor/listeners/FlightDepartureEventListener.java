@@ -5,7 +5,7 @@ import org.kie.internal.runtime.StatelessKnowledgeSession;
 import org.rozzie.processor.utils.Util;
 import org.rozzie.processor.events.AirlineEvent;
 import org.rozzie.processor.events.FlightDepatureTimeChangeEvent;
-import org.rozzie.processor.models.Flight;
+import org.rozzie.processor.models.event.sources.Flight;
 
 public class FlightDepartureEventListener extends AirlineListener {
 
