@@ -1,47 +1,38 @@
 package org.rozzie.processor;
 
-import org.rozzie.processor.repositories.cassandra.AirportRepo;
-import org.rozzie.processor.repositories.cassandra.FlightRepo;
+import org.everit.json.schema.ValidationException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+import org.everit.json.schema.Schema;
+import org.everit.json.schema.loader.SchemaLoader;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 @SpringBootApplication
-public class RozzieApp {
+public class RozzieApp implements CommandLineRunner {
 
-	@Autowired
-	private FlightRepo flightRepo;
+	 @Override
+	 public void run(String... args) throws Exception {
+//		 try {
+//			 InputStream inputStream = new FileInputStream
+//					 ("/home/chamarap/Desktop/docs/rozzie/schemas/model.json");
+//			 JSONObject rawSchema = new JSONObject(new JSONTokener(inputStream));
+//			 Schema schema = SchemaLoader.load(rawSchema);
+//			 InputStream example = new FileInputStream("/home/chamarap/Desktop/docs/rozzie/schemas/example.json");
+//			 JSONObject sample = new JSONObject(new JSONTokener(example));
+//			 schema.validate(sample); // throws a ValidationException if this object is invalid
+//		 } catch (ValidationException e) {
+//			 System.out.println("Exception caught");
+//		 }
 
-	@Autowired
-	private AirportRepo airportRepo;
-
-//	@Override
-//	public void run(String... args) throws Exception {
-//		try {
-//			flightRepo.deleteAll();
-//			airportRepo.deleteAll();
-//
-//			LocalDateTime plannedArrival = LocalDateTime.now().plusHours(1);
-//			LocalDateTime plannedDeparture = LocalDateTime.now().plusHours(3);
-//			System.out.println("The time is " + plannedArrival);
-//
-//			Airport source = new Airport(UUID.randomUUID(), "Colombo", "Sri Lanka");
-//			Airport destination = new Airport(UUID.randomUUID(), "Bangalore", "India");
-//
-//			Flight flight = new Flight(UUID.randomUUID(), plannedArrival, plannedDeparture, plannedArrival,
-//					plannedDeparture, source, destination);
-//			flightRepo.save(new FlightCas(flight));
-//			airportRepo.save(new AirportCas(source));
-//			airportRepo.save(new AirportCas(destination));
-//
-//			FlightDepartureEventListener listener = new FlightDepartureEventListener();
-//			flight.addListener(listener);
-//			flight.setActualDepatureTime(plannedDeparture.plusHours(2));
-//		} catch (Throwable t) {
-//			t.printStackTrace();
-//		}
-//
-//	}
+	 }
 	public static void main(String[] args) {
 		SpringApplication.run(RozzieApp.class, args);
 	}

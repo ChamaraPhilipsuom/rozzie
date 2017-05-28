@@ -7,10 +7,14 @@ public class Constants {
 
 	public static final String EVENT_MESSAGE = "=============================================\n"+
 			"        ROZZIE EVENT TRIGGERED\n" + "=============================================\n";
+
+	public static final String SCHEMA_KEY_PROPERTY = "key";
+
 	public static class RequestUri {
 
 		public static final String GET = "/info";
 		public static final String CREATE = "/create";
+		public static final String VALIDATE_JSON = "/validate";
 
 		public static class AirPort {
 			public static final String CONTROLLER = "/port";

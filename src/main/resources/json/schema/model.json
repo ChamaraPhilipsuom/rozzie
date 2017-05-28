@@ -1,0 +1,78 @@
+{
+  "type": "object",
+  "description": "Schema for flight records",
+  "required": [ "flight_number" ],
+  "properties": {
+    "arrival_airport": {
+      "$ref": "#/definitions/arrival_airport"
+    },
+    "flight_schedule": {
+      "$ref": "#/definitions/flight_schedule"
+    },
+    "flight_number": {
+      "type" : "string"
+    },
+    "departure_airport": {
+      "$ref": "#/definitions/departure_airport"
+    },
+    "status": {
+      "type" : "string"
+    }
+  },
+
+  "definitions": {
+    "arrival_airport": {
+      "properties": {
+        "terminal": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "airport_code": {
+          "type": "string"
+        },
+        "gate": {
+          "type": "string",
+        }
+      }
+    },
+
+    "flight_schedule": {
+      "properties" : {
+        "boarding_time": {
+          "type": "string"
+        },
+        "estimated_departure_time": {
+          "type": "string"
+        },
+        "estimated_arrival_time": {
+          "type": "string"
+        },
+        "scheduled_departure_time": {
+          "type": "string"
+        },
+        "scheduled_arrival_time": {
+          "type": "string"
+        }
+      }
+    },
+
+    "departure_airport": {
+      "properties": {
+        "terminal": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "airport_code": {
+          "type": "string",
+        },
+        "gate": {
+          "type": "string",
+        }
+      }
+    }
+  }
+}
