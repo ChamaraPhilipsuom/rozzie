@@ -1,12 +1,13 @@
 package com.rozzie.processor
 
-import org.rozzie.processor.models.Flight
+import org.rozzie.processor.utils.Util
 import java.time.Duration;
+import org.json.JSONObject;
 
 rule "flightDepartureDelay"
   when
-  $flight : Flight( isLate(getActualDepatureTime(),getPlannedDepatureTime()) )
+  $json : JSONObject ()
+  eval(Util.timeGreaterThan($json.get("scheduled_departure_time"),$json.get("estimated_departure_time")))
   then
-  System.out.println("Your flight departure time is delayed by " + Duration.between($flight.getPlannedDepatureTime(),
-  $flight.getActualDepatureTime()).toHours() + " hours");
+  System.out.println("Your flight departure time is delayed by X number of hours");
 end

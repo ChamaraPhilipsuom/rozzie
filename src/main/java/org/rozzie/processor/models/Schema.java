@@ -1,5 +1,9 @@
 package org.rozzie.processor.models;
 
+import org.rozzie.processor.utils.Constants;
+import org.rozzie.processor.utils.Util;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -14,6 +18,8 @@ public class Schema {
 	public Schema(){
 	    dataFieldMapping = new Properties();
 	    keys = new ArrayList<>();
+	    keys.add(Constants.DEFAULT_KEY);
+	    dataFieldMapping.put(Constants.DEFAULT_KEY, Util.getTime());
     }
 
 	public String getTableName() {
@@ -28,16 +34,16 @@ public class Schema {
 		return dataFieldMapping;
 	}
 
-	public void setDataFieldMapping(Properties properties) {
-		this.dataFieldMapping = properties;
+	public void addDataFieldMapping(Properties properties) {
+		this.dataFieldMapping.putAll(properties);
 	}
 
 	public List<String> getKeys() {
 		return keys;
 	}
 
-	public void setKeys(List<String> keys) {
-		this.keys = keys;
+	public void addKeys(List<String> keys) {
+		this.keys.addAll(keys);
 	}
 
 	public void addKey(String key) {
